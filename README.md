@@ -1,13 +1,13 @@
 ![congoh](https://user-images.githubusercontent.com/12631702/210295964-785cc63d-d697-420c-99ff-f492eb81dec9.svg)
 
-# `congo`: better structured congourrency for go
+# `congo`: better structured concurrency for go
 
 [![Go Reference](https://pkg.go.dev/badge/github.com/khulnasoft/congo.svg)](https://pkg.go.dev/github.com/khulnasoft/congo)
 [![Go Report Card](https://goreportcard.com/badge/github.com/khulnasoft/congo)](https://goreportcard.com/report/github.com/khulnasoft/congo)
 [![codecov](https://codecov.io/gh/khulnasoft/congo/branch/main/graph/badge.svg?token=MQZTEA1QWT)](https://codecov.io/gh/khulnasoft/congo)
 [![Discord](https://img.shields.io/badge/discord-chat-%235765F2)](https://discord.gg/bvXQXmtRjN)
 
-`congo` is your toolbelt for structured congourrency in go, making common tasks
+`congo` is your toolbelt for structured concurrency in go, making common tasks
 easier and safer.
 
 ```sh
@@ -17,7 +17,7 @@ go get github.com/khulnasoft/congo
 # At a glance
 
 - Use [`congo.WaitGroup`](https://pkg.go.dev/github.com/khulnasoft/congo#WaitGroup) if you just want a safer version of `sync.WaitGroup`
-- Use [`pool.Pool`](https://pkg.go.dev/github.com/khulnasoft/congo/pool#Pool) if you want a congourrency-limited task runner
+- Use [`pool.Pool`](https://pkg.go.dev/github.com/khulnasoft/congo/pool#Pool) if you want a concurrency-limited task runner
 - Use [`pool.ResultPool`](https://pkg.go.dev/github.com/khulnasoft/congo/pool#ResultPool) if you want a congourrent task runner that collects task results
 - Use [`pool.(Result)?ErrorPool`](https://pkg.go.dev/github.com/khulnasoft/congo/pool#ErrorPool) if your tasks are fallible
 - Use [`pool.(Result)?ContextPool`](https://pkg.go.dev/github.com/khulnasoft/congo/pool#ContextPool) if your tasks should be canceled on failure
@@ -51,7 +51,7 @@ A common pain point when working with goroutines is cleaning them up. It's
 really easy to fire off a `go` statement and fail to properly wait for it to
 complete.
 
-`congo` takes the opinionated stance that all congourrency should be scoped.
+`congo` takes the opinionated stance that all concurrency should be scoped.
 That is, goroutines should have an owner and that owner should always
 ensure that its owned goroutines exit properly.
 
@@ -76,9 +76,9 @@ func startTheThing(wg *congo.WaitGroup) {
 }
 ```
 
-For some more discussion on why scoped congourrency is nice, check out [this
+For some more discussion on why scoped concurrency is nice, check out [this
 blog
-post](https://vorpus.org/blog/notes-on-structured-congourrency-or-go-statement-considered-harmful/).
+post](https://vorpus.org/blog/notes-on-structured-concurrency-or-go-statement-considered-harmful/).
 
 ## Goal #2: Handle panics gracefully
 
@@ -172,7 +172,7 @@ func main() {
 
 ## Goal #3: Make congourrent code easier to read
 
-Doing congourrency correctly is difficult. Doing it in a way that doesn't
+Doing concurrency correctly is difficult. Doing it in a way that doesn't
 obfuscate what the code is actually doing is more difficult. The `congo` package
 attempts to make common operations easier by abstracting as much boilerplate
 complexity as possible.
