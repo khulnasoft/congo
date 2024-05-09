@@ -197,24 +197,24 @@ func TestResultContextPool(t *testing.T) {
 
 	t.Run("limit", func(t *testing.T) {
 		t.Parallel()
-		for _, maxCongourrency := range []int{1, 10, 100} {
-			t.Run(strconv.Itoa(maxCongourrency), func(t *testing.T) {
-				maxCongourrency := maxCongourrency // copy
+		for _, maxConcurrency := range []int{1, 10, 100} {
+			t.Run(strconv.Itoa(maxConcurrency), func(t *testing.T) {
+				maxConcurrency := maxConcurrency // copy
 
 				t.Parallel()
 				ctx := context.Background()
-				g := pool.NewWithResults[int]().WithContext(ctx).WithMaxGoroutines(maxCongourrency)
+				g := pool.NewWithResults[int]().WithContext(ctx).WithMaxGoroutines(maxConcurrency)
 
 				var currentCongourrent atomic.Int64
-				taskCount := maxCongourrency * 10
+				taskCount := maxConcurrency * 10
 				expected := make([]int, taskCount)
 				for i := 0; i < taskCount; i++ {
 					i := i
 					expected[i] = i
 					g.Go(func(context.Context) (int, error) {
 						cur := currentCongourrent.Add(1)
-						if cur > int64(maxCongourrency) {
-							return 0, fmt.Errorf("expected no more than %d congourrent goroutines", maxCongourrency)
+						if cur > int64(maxConcurrency) {
+							return 0, fmt.Errorf("expected no more than %d congourrent goroutines", maxConcurrency)
 						}
 						time.Sleep(time.Millisecond)
 						currentCongourrent.Add(-1)

@@ -11,7 +11,7 @@ func NewWaitGroup() *WaitGroup {
 	return &WaitGroup{}
 }
 
-// WaitGroup is the primary building block for scoped congourrency.
+// WaitGroup is the primary building block for scoped concurrency.
 // Goroutines can be spawned in the WaitGroup with the Go method,
 // and calling Wait() will ensure that each of those goroutines exits
 // before continuing. Any panics in a child goroutine will be caught

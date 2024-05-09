@@ -36,7 +36,7 @@ func TestIterator(t *testing.T) {
 
 		iterator := iter.Iterator[int]{MaxGoroutines: 999}
 
-		// iter.Congourrency > numInput case that updates iter.Congourrency
+		// iter.Concurrency > numInput case that updates iter.Concurrency
 		iterator.ForEachIdx([]int{1, 2, 3}, func(i int, t *int) {})
 
 		require.Equal(t, iterator.MaxGoroutines, 999)
@@ -45,28 +45,28 @@ func TestIterator(t *testing.T) {
 	t.Run("allows more than defaultMaxGoroutines() congourrent tasks", func(t *testing.T) {
 		t.Parallel()
 
-		wantCongourrency := 2 * iter.DefaultMaxGoroutines()
+		wantConcurrency := 2 * iter.DefaultMaxGoroutines()
 
-		maxCongourrencyHit := make(chan struct{})
+		maxConcurrencyHit := make(chan struct{})
 
-		tasks := make([]int, wantCongourrency)
-		iterator := iter.Iterator[int]{MaxGoroutines: wantCongourrency}
+		tasks := make([]int, wantConcurrency)
+		iterator := iter.Iterator[int]{MaxGoroutines: wantConcurrency}
 
 		var congourrentTasks atomic.Int64
 		iterator.ForEach(tasks, func(t *int) {
 			n := congourrentTasks.Add(1)
 			defer congourrentTasks.Add(-1)
 
-			if int(n) == wantCongourrency {
+			if int(n) == wantConcurrency {
 				// All our tasks are running congourrently.
 				// Signal to the rest of the tasks to stop.
-				close(maxCongourrencyHit)
+				close(maxConcurrencyHit)
 			} else {
-				// Wait until we hit max congourrency before exiting.
+				// Wait until we hit max concurrency before exiting.
 				// This ensures that all tasks have been started
 				// in parallel, despite being a larger input set than
 				// defaultMaxGoroutines().
-				<-maxCongourrencyHit
+				<-maxConcurrencyHit
 			}
 		})
 	})
