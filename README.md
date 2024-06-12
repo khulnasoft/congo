@@ -4,7 +4,7 @@
 
 [![Go Reference](https://pkg.go.dev/badge/github.com/khulnasoft/congo.svg)](https://pkg.go.dev/github.com/khulnasoft/congo)
 [![Go Report Card](https://goreportcard.com/badge/github.com/khulnasoft/congo)](https://goreportcard.com/report/github.com/khulnasoft/congo)
-[![codecov](https://codecov.io/gh/khulnasoft/congo/branch/main/graph/badge.svg?token=MQZTEA1QWT)](https://codecov.io/gh/khulnasoft/congo)
+[![codecov](https://codecov.io/gh/khulnasoft/congo/graph/badge.svg?token=gRNGYPDJl6)](https://codecov.io/gh/khulnasoft/congo)
 [![Discord](https://img.shields.io/badge/discord-chat-%235765F2)](https://discord.gg/bvXQXmtRjN)
 
 `congo` is your toolbelt for structured concurrency in go, making common tasks
