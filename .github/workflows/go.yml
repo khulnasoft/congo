@@ -37,7 +37,7 @@ jobs:
       run: go test -race -v ./... -coverprofile ./coverage.txt
 
     - name: Codecov
-      uses: codecov/codecov-action@v4.5.0
+      uses: codecov/codecov-action@v4.6.0
       with:
         files: ./coverage.txt
 
