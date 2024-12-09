@@ -9,7 +9,7 @@ import (
 // the behaviour of Map and MapErr. The zero value is safe to use with
 // reasonable defaults.
 //
-// Mapper is also safe for reuse and congourrent use.
+// Mapper is also safe for reuse and concurrent use.
 type Mapper[T, R any] Iterator[T]
 
 // Map applies f to each element of input, returning the mapped result.

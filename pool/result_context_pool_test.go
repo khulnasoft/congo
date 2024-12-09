@@ -205,26 +205,26 @@ func TestResultContextPool(t *testing.T) {
 				ctx := context.Background()
 				g := pool.NewWithResults[int]().WithContext(ctx).WithMaxGoroutines(maxConcurrency)
 
-				var currentCongourrent atomic.Int64
+				var currentConcurrent atomic.Int64
 				taskCount := maxConcurrency * 10
 				expected := make([]int, taskCount)
 				for i := 0; i < taskCount; i++ {
 					i := i
 					expected[i] = i
 					g.Go(func(context.Context) (int, error) {
-						cur := currentCongourrent.Add(1)
+						cur := currentConcurrent.Add(1)
 						if cur > int64(maxConcurrency) {
-							return 0, fmt.Errorf("expected no more than %d congourrent goroutines", maxConcurrency)
+							return 0, fmt.Errorf("expected no more than %d concurrent goroutines", maxConcurrency)
 						}
 						time.Sleep(time.Millisecond)
-						currentCongourrent.Add(-1)
+						currentConcurrent.Add(-1)
 						return i, nil
 					})
 				}
 				res, err := g.Wait()
 				require.Equal(t, expected, res)
 				require.NoError(t, err)
-				require.Equal(t, int64(0), currentCongourrent.Load())
+				require.Equal(t, int64(0), currentConcurrent.Load())
 			})
 		}
 	})

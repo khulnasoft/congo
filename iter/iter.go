@@ -15,7 +15,7 @@ func defaultMaxGoroutines() int { return runtime.GOMAXPROCS(0) }
 // and ForEachIdx. The zero value is safe to use with reasonable
 // defaults.
 //
-// Iterator is also safe for reuse and congourrent use.
+// Iterator is also safe for reuse and concurrent use.
 type Iterator[T any] struct {
 	// MaxGoroutines controls the maximum number of goroutines
 	// to use on this Iterator's methods.
@@ -64,7 +64,7 @@ func (iter Iterator[T]) ForEachIdx(input []T, f func(int, *T)) {
 
 	numInput := len(input)
 	if iter.MaxGoroutines > numInput {
-		// No more congourrent tasks than the number of input items.
+		// No more concurrent tasks than the number of input items.
 		iter.MaxGoroutines = numInput
 	}
 

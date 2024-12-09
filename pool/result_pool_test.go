@@ -89,7 +89,7 @@ func TestResultGroup(t *testing.T) {
 			t.Run(strconv.Itoa(maxGoroutines), func(t *testing.T) {
 				g := pool.NewWithResults[int]().WithMaxGoroutines(maxGoroutines)
 
-				var currentCongourrent atomic.Int64
+				var currentConcurrent atomic.Int64
 				var errCount atomic.Int64
 				taskCount := maxGoroutines * 10
 				expected := make([]int, taskCount)
@@ -97,19 +97,19 @@ func TestResultGroup(t *testing.T) {
 					i := i
 					expected[i] = i
 					g.Go(func() int {
-						cur := currentCongourrent.Add(1)
+						cur := currentConcurrent.Add(1)
 						if cur > int64(maxGoroutines) {
 							errCount.Add(1)
 						}
 						time.Sleep(time.Millisecond)
-						currentCongourrent.Add(-1)
+						currentConcurrent.Add(-1)
 						return i
 					})
 				}
 				res := g.Wait()
 				require.Equal(t, expected, res)
 				require.Equal(t, int64(0), errCount.Load())
-				require.Equal(t, int64(0), currentCongourrent.Load())
+				require.Equal(t, int64(0), currentConcurrent.Load())
 			})
 		}
 	})

@@ -3,8 +3,9 @@
 # `congo`: better structured concurrency for go
 
 [![Go Reference](https://pkg.go.dev/badge/github.com/khulnasoft/congo.svg)](https://pkg.go.dev/github.com/khulnasoft/congo)
+[![Khulnasoft](https://img.shields.io/badge/view%20on-khulnasoft-A112FE?logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAEZklEQVRoQ+2aXWgUZxSG3292sxtNN43BhBakFPyhxSujRSxiU1pr7SaGXqgUxOIEW0IFkeYighYUxAuLUlq0lrq2iCDpjWtmFVtoG6QVNOCFVShVLyxIk0DVjZLMxt3xTGTccd2ZOd/8JBHci0CY9zvnPPN+/7sCIXwKavOwAcy2QgngQiIztDSE0OwQlDPYR1ebiaH6J5kZChyfW12gRG4QVgGTBfMchMbFP9Sn5nlZL2D0JjLD6710lc+z0NfqSGTXQRQ4bX07Mq423yoBL3OSyHSvUxirMuaEvgbJWrdcvkHMoJwxYuq4INUhyuWvQa1jvdMGxAvCxJlyEC9XOBCWL04wwRzpbDoDQ7wfZJzIQLi5Eggk6DiRhZgWIAbE3NrM4A3LPT8Q7UgqAqLqTmLSHLGPkyzG/qXEczhd0q6RH+zaSBfaUoc4iQx19pIClIscrTkNZzG6gd7qMY6eC2Hqyo705ZfTf+eqJmhMzcSbYtQpOXc92ZsZjLVAL4YNUQbJ5Ttg4CQrQdGYj44Xr9m1XJCzmZusFDJOWNpHjmh5x624a2ZFtOKDVL+uNo2TuXE3bZQQZUf8gtgqP31uI94Z/rMqix+IGiRfWw3xN9dCgVx+L3WrHm4Dju6PXz/EkjuXJ6R+IGgyOE1TbZqTq9y1eo0EZo7oMo1ktPu3xjHvuiLT5AFNszUyDULtWpzE2/fEsey8O5TbWuGWwxrs5rS7nFNMWJrNh2No74s9Ec4vRNmRRzPXMP19fBMSVsGcOJ98G8N3Wl2gXcbTjbX7vUBxLaeASDQCm5Cu/0E2tvtb0Ea+BowtskFD0wvlc6Rf2M+Jx7dTu7ubFr2dnKDRaMQe2v/tcIrNB7FH0O50AcrBaApmRDVwFO31ql3pD8QW4dP0feNwl/Q+kFEtRyIGyaWXnpy1OO0qNJWHo1y6iCmAGkBb/Ru+HenDWIF2mo4r8G+tRRzoniSn2uqFLxANhe9LKHVyTbz6egk9+x5w5fK6ulSNNMhZ/Feno+GebLZV6isTTa6k5qNl5RnZ5u56Ib6SBvFzaWBBVFZzvnERWlt/Cg4l27XChLCqFyLekjhy6xJyoytgjPf7opIB8QPx7sYFiMXHPGt76m741MhCKMZfng0nBOIjmoJPsLqWHwgFpe6V6qtfcopxveR2Oy+J0ntIN/zCWkf8QNAJ7y6d8Bq4lxLc2/qJl5K7t432XwcqX5CrI34gzATWuYILQtdQPyePDK3iuOekCR3Efjhig1B1Uq5UoXEEoZX7d1q535J5S9VOeFyYyEBku5XTMXXKQTToX5Rg7OI44nbW5oKYeYK4EniMeF0YFNSmb+grhc84LyRCEP1/OurOcipCQbKxDeK2V5FcVyIDMQvsgz5gwFhcWWwKyRlvQ3gv29RwWoDYAbIofNyBxI9eDlQ+n3YgsgCWnr4MStGXQXmv9pF2La/k3OccV54JEBM4yp9EsXa/3LfO0dGPcYq0Y7DfZB8nJzZw2rppHgKgVHs8L5wvRwAAAABJRU5ErkJggg==)](https://khulnasoft.com/github.com/khulnasoft/congo)
 [![Go Report Card](https://goreportcard.com/badge/github.com/khulnasoft/congo)](https://goreportcard.com/report/github.com/khulnasoft/congo)
-[![codecov](https://codecov.io/gh/khulnasoft/congo/graph/badge.svg?token=gRNGYPDJl6)](https://codecov.io/gh/khulnasoft/congo)
+[![codecov](https://codecov.io/gh/khulnasoft/congo/branch/main/graph/badge.svg?token=MQZTEA1QWT)](https://codecov.io/gh/khulnasoft/congo)
 [![Discord](https://img.shields.io/badge/discord-chat-%235765F2)](https://discord.gg/bvXQXmtRjN)
 
 `congo` is your toolbelt for structured concurrency in go, making common tasks
@@ -18,12 +19,12 @@ go get github.com/khulnasoft/congo
 
 - Use [`congo.WaitGroup`](https://pkg.go.dev/github.com/khulnasoft/congo#WaitGroup) if you just want a safer version of `sync.WaitGroup`
 - Use [`pool.Pool`](https://pkg.go.dev/github.com/khulnasoft/congo/pool#Pool) if you want a concurrency-limited task runner
-- Use [`pool.ResultPool`](https://pkg.go.dev/github.com/khulnasoft/congo/pool#ResultPool) if you want a congourrent task runner that collects task results
+- Use [`pool.ResultPool`](https://pkg.go.dev/github.com/khulnasoft/congo/pool#ResultPool) if you want a concurrent task runner that collects task results
 - Use [`pool.(Result)?ErrorPool`](https://pkg.go.dev/github.com/khulnasoft/congo/pool#ErrorPool) if your tasks are fallible
 - Use [`pool.(Result)?ContextPool`](https://pkg.go.dev/github.com/khulnasoft/congo/pool#ContextPool) if your tasks should be canceled on failure
 - Use [`stream.Stream`](https://pkg.go.dev/github.com/khulnasoft/congo/stream#Stream) if you want to process an ordered stream of tasks in parallel with serial callbacks
-- Use [`iter.Map`](https://pkg.go.dev/github.com/khulnasoft/congo/iter#Map) if you want to congourrently map a slice
-- Use [`iter.ForEach`](https://pkg.go.dev/github.com/khulnasoft/congo/iter#ForEach) if you want to congourrently iterate over a slice
+- Use [`iter.Map`](https://pkg.go.dev/github.com/khulnasoft/congo/iter#Map) if you want to concurrently map a slice
+- Use [`iter.ForEach`](https://pkg.go.dev/github.com/khulnasoft/congo/iter#ForEach) if you want to concurrently iterate over a slice
 - Use [`panics.Catcher`](https://pkg.go.dev/github.com/khulnasoft/congo/panics#Catcher) if you want to catch panics in your own goroutines
 
 All pools are created with
@@ -43,7 +44,7 @@ then configured with methods:
 The main goals of the package are:
 1) Make it harder to leak goroutines
 2) Handle panics gracefully
-3) Make congourrent code easier to read
+3) Make concurrent code easier to read
 
 ## Goal #1: Make it harder to leak goroutines
 
@@ -170,16 +171,16 @@ func main() {
 </tr>
 </table>
 
-## Goal #3: Make congourrent code easier to read
+## Goal #3: Make concurrent code easier to read
 
 Doing concurrency correctly is difficult. Doing it in a way that doesn't
 obfuscate what the code is actually doing is more difficult. The `congo` package
 attempts to make common operations easier by abstracting as much boilerplate
 complexity as possible.
 
-Want to run a set of congourrent tasks with a bounded set of goroutines? Use
-`pool.New()`. Want to process an ordered stream of results congourrently, but
-still maintain order? Try `stream.New()`. What about a congourrent map over
+Want to run a set of concurrent tasks with a bounded set of goroutines? Use
+`pool.New()`. Want to process an ordered stream of results concurrently, but
+still maintain order? Try `stream.New()`. What about a concurrent map over
 a slice? Take a peek at `iter.Map()`.
 
 Browse some examples below for some comparisons with doing these by hand.
@@ -317,7 +318,7 @@ func process(values []int) {
 </tr>
 </table>
 
-Congourrently map a slice:
+Concurrently map a slice:
 
 <table>
 <tr>
@@ -370,7 +371,7 @@ func congoMap(
 </tr>
 </table>
 
-Process an ordered stream congourrently:
+Process an ordered stream concurrently:
 
 
 <table>
