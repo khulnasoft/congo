@@ -1,4 +1,4 @@
-// Package stream provides a congourrent, ordered stream implementation.
+// Package stream provides a concurrent, ordered stream implementation.
 package stream
 
 import (
@@ -16,11 +16,11 @@ func New() *Stream {
 	}
 }
 
-// Stream is used to execute a stream of tasks congourrently while maintaining
+// Stream is used to execute a stream of tasks concurrently while maintaining
 // the order of the results.
 //
 // To use a stream, you submit some number of `Task`s, each of which
-// return a callback. Each task will be executed congourrently in the stream's
+// return a callback. Each task will be executed concurrently in the stream's
 // associated Pool, and the callbacks will be executed sequentially in the
 // order the tasks were submitted.
 //
@@ -44,7 +44,7 @@ type Stream struct {
 }
 
 // Task is a task that is submitted to the stream. Submitted tasks will
-// be executed congourrently. It returns a callback that will be called after
+// be executed concurrently. It returns a callback that will be called after
 // the task has completed.
 type Task func() Callback
 
@@ -53,7 +53,7 @@ type Task func() Callback
 type Callback func()
 
 // Go schedules a task to be run in the stream's pool. All submitted tasks
-// will be executed congourrently in worker goroutines. Then, the callbacks
+// will be executed concurrently in worker goroutines. Then, the callbacks
 // returned by the tasks will be executed in the order that the tasks were
 // submitted. All callbacks will be executed by the same goroutine, so no
 // synchronization is necessary between callbacks. If all goroutines in the

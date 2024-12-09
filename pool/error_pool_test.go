@@ -99,21 +99,21 @@ func TestErrorPool(t *testing.T) {
 			t.Run(strconv.Itoa(maxGoroutines), func(t *testing.T) {
 				g := pool.New().WithErrors().WithMaxGoroutines(maxGoroutines)
 
-				var currentCongourrent atomic.Int64
+				var currentConcurrent atomic.Int64
 				taskCount := maxGoroutines * 10
 				for i := 0; i < taskCount; i++ {
 					g.Go(func() error {
-						cur := currentCongourrent.Add(1)
+						cur := currentConcurrent.Add(1)
 						if cur > int64(maxGoroutines) {
-							return fmt.Errorf("expected no more than %d congourrent goroutine", maxGoroutines)
+							return fmt.Errorf("expected no more than %d concurrent goroutine", maxGoroutines)
 						}
 						time.Sleep(time.Millisecond)
-						currentCongourrent.Add(-1)
+						currentConcurrent.Add(-1)
 						return nil
 					})
 				}
 				require.NoError(t, g.Wait())
-				require.Equal(t, int64(0), currentCongourrent.Load())
+				require.Equal(t, int64(0), currentConcurrent.Load())
 			})
 		}
 	})

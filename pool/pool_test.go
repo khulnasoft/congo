@@ -65,26 +65,26 @@ func TestPool(t *testing.T) {
 
 	t.Run("limit", func(t *testing.T) {
 		t.Parallel()
-		for _, maxCongourrent := range []int{1, 10, 100} {
-			t.Run(strconv.Itoa(maxCongourrent), func(t *testing.T) {
-				g := pool.New().WithMaxGoroutines(maxCongourrent)
+		for _, maxConcurrent := range []int{1, 10, 100} {
+			t.Run(strconv.Itoa(maxConcurrent), func(t *testing.T) {
+				g := pool.New().WithMaxGoroutines(maxConcurrent)
 
-				var currentCongourrent atomic.Int64
+				var currentConcurrent atomic.Int64
 				var errCount atomic.Int64
-				taskCount := maxCongourrent * 10
+				taskCount := maxConcurrent * 10
 				for i := 0; i < taskCount; i++ {
 					g.Go(func() {
-						cur := currentCongourrent.Add(1)
-						if cur > int64(maxCongourrent) {
+						cur := currentConcurrent.Add(1)
+						if cur > int64(maxConcurrent) {
 							errCount.Add(1)
 						}
 						time.Sleep(time.Millisecond)
-						currentCongourrent.Add(-1)
+						currentConcurrent.Add(-1)
 					})
 				}
 				g.Wait()
 				require.Equal(t, int64(0), errCount.Load())
-				require.Equal(t, int64(0), currentCongourrent.Load())
+				require.Equal(t, int64(0), currentConcurrent.Load())
 			})
 		}
 	})

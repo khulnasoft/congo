@@ -42,7 +42,7 @@ func TestIterator(t *testing.T) {
 		require.Equal(t, iterator.MaxGoroutines, 999)
 	})
 
-	t.Run("allows more than defaultMaxGoroutines() congourrent tasks", func(t *testing.T) {
+	t.Run("allows more than defaultMaxGoroutines() concurrent tasks", func(t *testing.T) {
 		t.Parallel()
 
 		wantConcurrency := 2 * iter.DefaultMaxGoroutines()
@@ -52,13 +52,13 @@ func TestIterator(t *testing.T) {
 		tasks := make([]int, wantConcurrency)
 		iterator := iter.Iterator[int]{MaxGoroutines: wantConcurrency}
 
-		var congourrentTasks atomic.Int64
+		var concurrentTasks atomic.Int64
 		iterator.ForEach(tasks, func(t *int) {
-			n := congourrentTasks.Add(1)
-			defer congourrentTasks.Add(-1)
+			n := concurrentTasks.Add(1)
+			defer concurrentTasks.Add(-1)
 
 			if int(n) == wantConcurrency {
-				// All our tasks are running congourrently.
+				// All our tasks are running concurrently.
 				// Signal to the rest of the tasks to stop.
 				close(maxConcurrencyHit)
 			} else {

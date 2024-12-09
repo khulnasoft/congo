@@ -77,7 +77,7 @@ func TestStream(t *testing.T) {
 			s.Go(func() stream.Callback {
 				curr := currentTaskCount.Add(1)
 				if curr > 5 {
-					t.Fatal("too many congourrent tasks being executed")
+					t.Fatal("too many concurrent tasks being executed")
 				}
 				defer currentTaskCount.Add(-1)
 
@@ -86,7 +86,7 @@ func TestStream(t *testing.T) {
 				return func() {
 					curr := currentCallbackCount.Add(1)
 					if curr > 1 {
-						t.Fatal("too many congourrent callbacks being executed")
+						t.Fatal("too many concurrent callbacks being executed")
 					}
 
 					time.Sleep(time.Millisecond)

@@ -12,7 +12,7 @@ func New() *Pool {
 	return &Pool{}
 }
 
-// Pool is a pool of goroutines used to execute tasks congourrently.
+// Pool is a pool of goroutines used to execute tasks concurrently.
 //
 // Tasks are submitted with Go(). Once all your tasks have been submitted, you
 // must call Wait() to clean up any spawned goroutines and propagate any

@@ -16,7 +16,7 @@ jobs:
     timeout-minutes: 15
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0 # to be able to retrieve the last commit in main
 
@@ -31,7 +31,7 @@ jobs:
           make bench | tee ${{ github.sha }}_bench_output.txt
 
       - name: Get CPU information
-        uses: kenchan0130/actions-system-info@v1.3.0
+        uses: kenchan0130/actions-system-info@v1.2.1
         id: system-info
 
       - name: Get Main branch SHA
@@ -42,7 +42,7 @@ jobs:
 
       - name: Get benchmark JSON from main branch
         id: cache
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v3
         with:
           path: ./cache/benchmark-data.json
           key: ${{ steps.get-main-branch-sha.outputs.sha }}-${{ runner.os }}-${{ steps.system-info.outputs.cpu-model }}-go-benchmark
