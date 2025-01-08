@@ -25,9 +25,16 @@ func Map[T, R any](input []T, f func(*T) R) []R {
 // Map uses up to the configured Mapper's maximum number of goroutines.
 func (m Mapper[T, R]) Map(input []T, f func(*T) R) []R {
 	res := make([]R, len(input))
-	Iterator[T](m).ForEachIdx(input, func(i int, t *T) {
-		res[i] = f(t)
-	})
+	// Use a WaitGroup to wait for all goroutines to finish
+	var wg sync.WaitGroup
+	wg.Add(len(input))
+	for i := range input {
+		go func(i int) {
+			defer wg.Done()
+			res[i] = f(&input[i])
+		}(i)
+	}
+	wg.Wait()
 	return res
 }
 
@@ -50,14 +57,21 @@ func (m Mapper[T, R]) MapErr(input []T, f func(*T) (R, error)) ([]R, error) {
 		errMux sync.Mutex
 		errs   []error
 	)
-	Iterator[T](m).ForEachIdx(input, func(i int, t *T) {
-		var err error
-		res[i], err = f(t)
-		if err != nil {
-			errMux.Lock()
-			errs = append(errs, err)
-			errMux.Unlock()
-		}
-	})
+	// Use a WaitGroup to wait for all goroutines to finish
+	var wg sync.WaitGroup
+	wg.Add(len(input))
+	for i := range input {
+		go func(i int) {
+			defer wg.Done()
+			var err error
+			res[i], err = f(&input[i])
+			if err != nil {
+				errMux.Lock()
+				errs = append(errs, err)
+				errMux.Unlock()
+			}
+		}(i)
+	}
+	wg.Wait()
 	return res, errors.Join(errs...)
 }
