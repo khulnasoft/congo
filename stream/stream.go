@@ -1,8 +1,8 @@
-// Package stream provides a concurrent, ordered stream implementation.
 package stream
 
 import (
 	"sync"
+	"sync/atomic"
 
 	"github.com/khulnasoft/congo"
 	"github.com/khulnasoft/congo/panics"
@@ -137,18 +137,59 @@ func (s *Stream) callbacker() {
 	}
 }
 
-type callbackCh chan func()
+type callbackCh struct {
+	callback Callback
+	next     *callbackCh
+}
 
 var callbackChPool = sync.Pool{
 	New: func() any {
-		return make(callbackCh, 1)
+		return &callbackCh{}
 	},
 }
 
-func getCh() callbackCh {
-	return callbackChPool.Get().(callbackCh)
+var callbackQueueHead atomic.Pointer[callbackCh]
+var callbackQueueTail atomic.Pointer[callbackCh]
+
+func getCh() *callbackCh {
+	return callbackChPool.Get().(*callbackCh)
 }
 
-func putCh(ch callbackCh) {
+func putCh(ch *callbackCh) {
+	ch.callback = nil
+	ch.next = nil
 	callbackChPool.Put(ch)
+}
+
+func (s *Stream) enqueueCallbackCh(ch *callbackCh) {
+	for {
+		tail := callbackQueueTail.Load()
+		if tail == nil {
+			if callbackQueueHead.CompareAndSwap(nil, ch) {
+				callbackQueueTail.Store(ch)
+				return
+			}
+		} else {
+			if callbackQueueTail.CompareAndSwap(tail, ch) {
+				tail.next = ch
+				return
+			}
+		}
+	}
+}
+
+func (s *Stream) dequeueCallbackCh() *callbackCh {
+	for {
+		head := callbackQueueHead.Load()
+		if head == nil {
+			return nil
+		}
+		next := head.next
+		if callbackQueueHead.CompareAndSwap(head, next) {
+			if next == nil {
+				callbackQueueTail.CompareAndSwap(head, nil)
+			}
+			return head
+		}
+	}
 }
