@@ -150,5 +150,10 @@ func getCh() callbackCh {
 }
 
 func putCh(ch callbackCh) {
+	// Clear the channel before putting it back to the pool
+	select {
+	case <-ch:
+	default:
+	}
 	callbackChPool.Put(ch)
 }
